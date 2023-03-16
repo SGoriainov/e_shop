@@ -31,5 +31,6 @@ public class ProductService {
         for (Product product : products) {
             if (product.getId().equals(id)) return product;
         }
+        return  null;
     }
 }
