@@ -12,7 +12,7 @@ public class ProductService {
     private  long ID = 0;
 
     {
-        products.add(new Product(++ID,"PlayStation 5", "Simple desctiption", 6700, "Toliatti", "Sergey"));
+        products.add(new Product(++ID,"PlayStation5", "Simple desctiption", 6700, "Toliatti", "Sergey"));
         products.add(new Product(++ID,"CoreI9", "Simple desctiption", 1800, "Samara", "Petr"));
     }
 
