@@ -1,22 +1,24 @@
 package com.example.FreeMarket.services;
 
 import com.example.FreeMarket.models.Product;
+import com.example.FreeMarket.repositories.ProductRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class ProductService {
-    private List<Product> products = new ArrayList<>();
-    private  long ID = 0;
-
-    {
-        products.add(new Product(++ID,"PlayStation5", "Simple desctiption", 6700, "Toliatti", "Sergey"));
-        products.add(new Product(++ID,"CoreI9", "Simple desctiption", 1800, "Samara", "Petr"));
+    private final ProductRepository productRepository;
+    public List<Product> listProducts (String title) {
+        if(title != null) productRepository.findByTitle(title);
+        return productRepository.findAll();
     }
 
-    public  List<Product> listProducts() { return  products;}
 
     public  void saveProdust(Product product) {
         product.setId(++ID);
