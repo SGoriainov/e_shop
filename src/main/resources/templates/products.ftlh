@@ -5,11 +5,17 @@
 </head>
 <body>
 <h1>FreeMarket</h1><hr>
-<h4> Товары со всей страны</h4
+<h4> Товары со всей России</h4
+<form action="/" method="get">
+    Поиск по названию обьявления: <input type="text" name="title"><br>
+    <input type="submit" value="Поиск"/>
+<form/>
 <#list products as product>
     <div>
         <p>${product.title}</b> ${product.price} руб. | <a href="/product/${product.id}">Подробнее...</a></p>
     </div>
+    <#else>
+    <h3>Товаров нет<h3>
 </#list>
 <hr>
 <h3>Создать новый товар</h3>

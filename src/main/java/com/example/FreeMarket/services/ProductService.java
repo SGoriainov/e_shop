@@ -21,18 +21,14 @@ public class ProductService {
 
 
     public  void saveProdust(Product product) {
-        product.setId(++ID);
-        products.add(product);
+        log.info("Saving new {}", product);
+        productRepository.save(product);
     }
 
     public  void deleteProduct (Long id) {
-        products.removeIf(product -> product.getId().equals(id));
+        productRepository.deleteById(id);
     }
-
     public  Product getProductById(Long id) {
-        for (Product product : products) {
-            if (product.getId().equals(id)) return product;
-        }
-        return  null;
+        return productRepository.findById(id).orElse(null);
     }
 }
