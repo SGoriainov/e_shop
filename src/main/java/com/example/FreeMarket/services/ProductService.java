@@ -18,6 +18,11 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
+    public List<Product> listProducts(String title) {
+        if (title != null) return productRepository.findByTitle(title);
+        return productRepository.findAll();
+    }
+
     public void saveProduct(Product product, MultipartFile file1,MultipartFile file2, MultipartFile file3) throws IOException {
         Image image1;
         Image image2;
@@ -49,12 +54,8 @@ public class ProductService {
         image.setOriginalFileName(file.getOriginalFilename());
         image.setContentType(file.getContentType());
         image.setSize(file.getSize());
+        image.setBytes(file.getBytes());
         return image;
-    }
-
-    public List<Product> listProducts(String title) {
-        if (title != null) return productRepository.findByTitle(title);
-        return productRepository.findAll();
     }
 
     public void deleteProduct(Long id) {
