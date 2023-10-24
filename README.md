@@ -18,3 +18,4 @@
 2. Товары
 
 ## Схема базы данных
+![e_shop (1)](https://github.com/SGoriainov/e_shop/assets/106583717/c8d6fff6-87d2-4f4a-9988-425bd7a7d0aa)
