@@ -4,25 +4,38 @@ package com.example.FreeMarket.configurations;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig  {
     @Bean
-    public SecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/", "/product/**", "/images/**", "/registration", "/user/**", "/static/**")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
-
+                .authorizeHttpRequests((authz) -> {
+                            try {
+                                authz
+                                .requestMatchers("/", "/product/**", "/images/**", "/registration", "/user/**", "/static/**")
+                                .permitAll()
+                                .anyRequest().authenticated()
+                                .and()
+                                .formLogin()
+                                .loginPage("/login")
+                                .permitAll()
+                                .and()
+                                .logout()
+                                .permitAll();
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                );
+        return http.build();
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(8);
     }
 
 }
