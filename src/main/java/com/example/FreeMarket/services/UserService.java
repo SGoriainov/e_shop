@@ -33,6 +33,11 @@ public class UserService {
         return true;
     }
 
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
+
+
     public List<User> list() {
         return userRepository.findAll();
     }

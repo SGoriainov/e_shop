@@ -4,38 +4,42 @@ import com.example.FreeMarket.models.Product;
 import com.example.FreeMarket.models.User;
 import com.example.FreeMarket.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
+@RestController
 public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/")
-    public String products(@RequestParam(name = "searchWord", required = false) String title, Principal principal, Model model) {
-        model.addAttribute("products", productService.listProducts(title));
-        model.addAttribute("user", productService.getUserByPrincipal(principal));
-        model.addAttribute("searchWord", title);
-        return "products";
+    public Map<String, Object> products(@RequestParam(name = "searchWord", required = false) String title, Principal principal) {
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("products", productService.listProducts(title));
+        responseData.put("user", productService.getUserByPrincipal(principal));
+        responseData.put("searchWord", title);
+
+        return responseData;
     }
 
     @GetMapping("/product/{id}")
-    public String productInfo(@PathVariable Long id, Model model, Principal principal) {
+    public Map<String, Object> productInfo(@PathVariable Long id, Principal principal) {
         Product product = productService.getProductById(id);
-        model.addAttribute("user", productService.getUserByPrincipal(principal));
-        model.addAttribute("product", product);
-        model.addAttribute("images", product.getImages());
-        model.addAttribute("authorProduct", product.getUser());
-        return "product-info";
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("user", productService.getUserByPrincipal(principal));
+        responseData.put("product", product);
+        responseData.put("images", product.getImages());
+        responseData.put("authorProduct", product.getUser());
+        return responseData;
     }
 
     @PostMapping("/product/create")
@@ -52,10 +56,11 @@ public class ProductController {
     }
 
     @GetMapping("/my/products")
-    public String userProducts(Principal principal, Model model) {
+    public Map<String, Object> userProducts(Principal principal, Model model) {
         User user = productService.getUserByPrincipal(principal);
-        model.addAttribute("user", user);
-        model.addAttribute("products", user.getProducts());
-        return "my-products";
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("user", user);
+        responseData.put("products", user.getProducts());
+        return responseData;
     }
 }
