@@ -9,5 +9,4 @@ public class FreeMarketApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FreeMarketApplication.class, args);
 	}
-
 }

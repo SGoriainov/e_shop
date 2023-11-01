@@ -2,11 +2,8 @@ package com.example.FreeMarket.models;
 
 import com.example.FreeMarket.models.enams.Role;
 import jakarta.persistence.*;
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
