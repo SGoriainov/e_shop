@@ -15,18 +15,14 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "name")
     private String name;
-    @Column(name = "originalFileName")
-    private String originalFileName;
-    @Column(name = "size")
-    private Long size;
-    @Column(name = "contentType")
-    private String contentType;
-    @Column(name = "isPreviewImage")
-    private boolean isPreviewImage;
-    @Lob
-    private byte[] bytes;
+
+    @Column(name = "url")
+    private String url;
+
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
     private Product product;
 }
